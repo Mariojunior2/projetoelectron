@@ -4,23 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/css/styles.css">
-  <title>Cronômetro</title>
+  <title>Editor de Codigo</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Cronômetro</h1>
-    <div class="timer">
-      <span id="hours">00</span>
-      <span id="minutes">00</span>
-      <span id="seconds">00</span>
-    </div>
-    <div class="controls">
-      <button id="start-btn">Iniciar</button>
-      <button id="stop-btn" disabled>Parar</button>
-      <button id="reset-btn">Reiniciar</button>
-    </div>
+  <div id="editor-container">
+    <header>
+      <h1>Editor de Codigo</h1>
+      <div id="infor">Linha: <span id="line">1</span>, Coluna: <span id="column">1</span></div>
+    </header>
+    <textarea id="editor"></textarea>
+    <footer>
+      <button id="save">Guardar</button>
+      <button id="load">Carregar</button>
+      <input type="file" id="file-input" style="display: none;">
+    </footer>
   </div>
-
   <script src="assets/js/script.js"></script>
+  
 </body>
 </html>

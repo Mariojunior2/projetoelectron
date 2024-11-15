@@ -1,55 +1,40 @@
-let interval;
-let hours = 0;
-let minutes = 0;
-let seconds = 0;
+const fs = require('fs');
+const path = require('path');
 
-const hoursSpan = document.getElementById('hours');
-const minutsSpan = document.getElementById('minutes');
-const secondsSpan = document.getElementById('seconds');
-const startBtn = document.getElementById('start-btn');
-const stopBtn = document.getElementById('stop-btn');
-const resetBtn = document.getElementById('reset-btn');
+const editor = document.getElementById('editor');
+const saveButton = document.getElementById('save');
+const loadButton = document.getElementById('load');
+const fileInput = document.getElementById('file-input');
+const  lineInfo = document.getElementById('line');
+const columnInfo = document.getElementById('column');
 
-startBtn.addEventListener('click', startTimer);
-stopBtn.addEventListener('click', stopTimer);
-resetBtn.addEventListener('click', resetTimer);
+editor.addEventListener('keyup', () => {
+    const cursorPosition = editor.selectionStart;
+    const lines = editor.value.substr(0, cursorPosition).split('\n');
+    lineInfo.textContent = lines.length;
+    columnInfo.textContent = lines[lines.length - 1].length + 1;
+});
 
-function startTimer() {
-    interval = setInterval(() => {
-        seconds++;
-        if (seconds === 60) {
-            minutes++;
-            seconds = 0;
-        }
-        if (seconds === 60) {
-            hours++;
-            minutes = 0;
-        }
-        updateTimer();
-    }, 1000);
-    startBtn.disabled = true;
-    startBtn.disabled = false;
-}
+saveButton.addEventListener('click', () => {
+    const content = editor.value;
+    const filePath = path.join(__dirname, 'output.txt');
+    fs.writeFileSync(filePath, content, 'utf8');
+    alert(`Salvo: ${filePath}`);
+});
 
-function stopTimer() {
-    clearInterval(interval);
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-}
+loadButton.addEventListener('click', () => fileInput.click());
 
-function  resetTimer() {
-    clearInterval(interval);
-    hours = 0;
-    minutes = 0;
-    seconds = 0;
-    updateTimer();
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-}
+fileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
 
-function updateTimer() {
-    hoursSpan.textContent = String(hours).padStart(2, '0');
-    minutsSpan.textContent = String(minutes).padStart(2, '0');
-    secondsSpan.textContent = String(seconds).padStart(2, '0');
-}
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        editor.value = e.target.result;
+        addEventListener;
+        alert('carregado com sucesso!')
+    };
+    reader.readAsText(file);
+});
+
 
